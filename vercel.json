@@ -1,6 +1,1 @@
-{
-  "buildCommand": "cd woofi-frontend && npm run build",
-  "outputDirectory": "woofi-frontend/.next",
-  "installCommand": "cd woofi-frontend && npm install",
-  "framework": "nextjs"
-}
+{}
