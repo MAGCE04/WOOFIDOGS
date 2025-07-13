@@ -2,6 +2,13 @@
 
 A platform to showcase rescued dogs and allow users to support them using SOL.
 
+## Project Structure
+
+This is a monorepo containing:
+
+- `woofi-frontend/` - Next.js frontend application
+- `woofi_program/` - Solana smart contract (Anchor framework)
+
 ## Features
 
 - Browse rescued dogs and their stories
@@ -24,23 +31,17 @@ A platform to showcase rescued dogs and allow users to support them using SOL.
 - Solana CLI tools
 - Phantom wallet or other Solana wallet
 
-### Installation
+### Frontend Development
 
-1. Clone the repository
-2. Install dependencies:
-   ```bash
-   npm install
-   # or
-   yarn
-   ```
-3. Run the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+```bash
+cd woofi-frontend
+npm install
+npm run dev
+```
 
-### Solana Program
+The frontend will be available at http://localhost:3000
+
+### Solana Program Development
 
 The Solana program is located in the `woofi_program` directory. To build and deploy:
 
@@ -49,6 +50,16 @@ cd woofi_program
 anchor build
 anchor deploy
 ```
+
+## Deployment
+
+### Frontend Deployment (Vercel)
+
+The frontend is configured for deployment on Vercel. The `vercel.json` file in the root directory ensures that Vercel uses the `woofi-frontend` directory as the root for deployment.
+
+### Solana Program Deployment
+
+The Solana program can be deployed to devnet or mainnet using Anchor CLI.
 
 ## License
 
