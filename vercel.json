@@ -1,1 +1,15 @@
-{}
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "woofi-frontend/package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/woofi-frontend/$1"
+    }
+  ]
+}

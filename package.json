@@ -2,12 +2,9 @@
   "name": "woofi-dogs",
   "version": "1.0.0",
   "private": true,
-  "workspaces": [
-    "woofi-frontend"
-  ],
   "scripts": {
     "dev": "cd woofi-frontend && npm run dev",
-    "build": "cd woofi-frontend && npm run build",
+    "build": "cd woofi-frontend && npm install && npm run build",
     "start": "cd woofi-frontend && npm run start"
   }
 }

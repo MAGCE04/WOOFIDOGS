@@ -27,7 +27,7 @@ This is a monorepo containing:
 
 ### Prerequisites
 
-- Node.js 16+ and npm/yarn
+- Node.js 18.17.0+ and npm/yarn
 - Solana CLI tools
 - Phantom wallet or other Solana wallet
 
@@ -55,19 +55,33 @@ anchor deploy
 
 ### Frontend Deployment (Vercel)
 
-To deploy the frontend to Vercel, follow these steps:
+#### Option 1: Deploy using Vercel Dashboard (Recommended)
 
 1. Go to the Vercel dashboard and create a new project
 2. Connect your GitHub repository
 3. Configure the project with the following settings:
    - Framework Preset: Next.js
    - Root Directory: woofi-frontend
+   - Build Command: npm run build
+   - Output Directory: .next
+   - Install Command: npm install
 4. Click "Deploy"
 
-If you're having issues with the deployment, make sure:
-- The "Root Directory" is set to "woofi-frontend"
-- The build command is set to "npm run build"
-- The output directory is set to ".next"
+#### Option 2: Deploy using Vercel CLI
+
+1. Install the Vercel CLI: `npm install -g vercel`
+2. Navigate to the project root: `cd DOGDONATION`
+3. Run: `vercel --cwd woofi-frontend`
+4. Follow the prompts to configure your deployment
+
+### Troubleshooting Vercel Deployment
+
+If you encounter issues with the Vercel deployment:
+
+1. Make sure you're using Node.js 18.17.0 or later (check the "engines" field in package.json)
+2. Ensure all dependencies are correctly specified in the woofi-frontend/package.json file
+3. Try deploying only the woofi-frontend directory as a standalone project
+4. Check Vercel logs for specific error messages
 
 ### Solana Program Deployment
 
