@@ -1,7 +1,7 @@
 'use client';
 
 import { Connection, PublicKey } from '@solana/web3.js';
-import { AnchorProvider, Program, web3 } from '@coral-xyz/anchor';
+import { AnchorProvider, Program, web3, BN } from '@coral-xyz/anchor';
 import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
 import { useMemo } from 'react';
 import idl from '../idl/woofi.json';
@@ -53,18 +53,3 @@ export const findDonationPDA = (donor: PublicKey, timestamp: number) => {
     PROGRAM_ID
   );
 };
-
-// Helper for BN
-class BN {
-  constructor(number: number) {
-    this.number = number;
-  }
-
-  number: number;
-
-  toArrayLike(BufferType: typeof Buffer, endian: string, length: number) {
-    const buf = Buffer.alloc(length);
-    buf.writeBigInt64LE(BigInt(this.number));
-    return buf;
-  }
-}
