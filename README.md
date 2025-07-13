@@ -55,7 +55,10 @@ anchor deploy
 
 ### Frontend Deployment (Vercel)
 
-The frontend is configured for deployment on Vercel. The `vercel.json` file in the root directory ensures that Vercel uses the `woofi-frontend` directory as the root for deployment.
+The frontend is configured for deployment on Vercel. The `vercel.json` file in the root directory configures Vercel to:
+- Run the install command in the woofi-frontend directory
+- Build the Next.js app from the woofi-frontend directory
+- Use the correct output directory for the build artifacts
 
 ### Solana Program Deployment
 
