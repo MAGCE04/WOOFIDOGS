@@ -1,0 +1,375 @@
+{
+  "version": "0.1.0",
+  "name": "woofi",
+  "instructions": [
+    {
+      "name": "initializePlatform",
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "platform",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "treasury",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "addDog",
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "platform",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "dog",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        },
+        {
+          "name": "age",
+          "type": "u8"
+        },
+        {
+          "name": "imageUrl",
+          "type": "string"
+        },
+        {
+          "name": "story",
+          "type": "string"
+        },
+        {
+          "name": "needsFood",
+          "type": "bool"
+        },
+        {
+          "name": "needsToys",
+          "type": "bool"
+        },
+        {
+          "name": "needsMedical",
+          "type": "bool"
+        },
+        {
+          "name": "needsShelter",
+          "type": "bool"
+        },
+        {
+          "name": "needsOther",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "updateDog",
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "dog",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "imageUrl",
+          "type": "string"
+        },
+        {
+          "name": "story",
+          "type": "string"
+        },
+        {
+          "name": "needsFood",
+          "type": "bool"
+        },
+        {
+          "name": "needsToys",
+          "type": "bool"
+        },
+        {
+          "name": "needsMedical",
+          "type": "bool"
+        },
+        {
+          "name": "needsShelter",
+          "type": "bool"
+        },
+        {
+          "name": "needsOther",
+          "type": "string"
+        },
+        {
+          "name": "active",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "donate",
+      "accounts": [
+        {
+          "name": "donor",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "platform",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "dog",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "donation",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "message",
+          "type": "string"
+        },
+        {
+          "name": "timestamp",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "withdrawFunds",
+      "accounts": [
+        {
+          "name": "admin",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "platform",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "treasury",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "recipient",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Dog",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "age",
+            "type": "u8"
+          },
+          {
+            "name": "imageUrl",
+            "type": "string"
+          },
+          {
+            "name": "story",
+            "type": "string"
+          },
+          {
+            "name": "needsFood",
+            "type": "bool"
+          },
+          {
+            "name": "needsToys",
+            "type": "bool"
+          },
+          {
+            "name": "needsMedical",
+            "type": "bool"
+          },
+          {
+            "name": "needsShelter",
+            "type": "bool"
+          },
+          {
+            "name": "needsOther",
+            "type": "string"
+          },
+          {
+            "name": "totalDonations",
+            "type": "u64"
+          },
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "active",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Donation",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "donor",
+            "type": "publicKey"
+          },
+          {
+            "name": "dogId",
+            "type": "publicKey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          },
+          {
+            "name": "message",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Platform",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "publicKey"
+          },
+          {
+            "name": "treasury",
+            "type": "publicKey"
+          },
+          {
+            "name": "totalDonations",
+            "type": "u64"
+          },
+          {
+            "name": "dogCount",
+            "type": "u32"
+          },
+          {
+            "name": "donationCount",
+            "type": "u32"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Unauthorized",
+      "msg": "Only the admin can perform this action"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidAmount",
+      "msg": "Donation amount must be positive"
+    },
+    {
+      "code": 6002,
+      "name": "DogNotFound",
+      "msg": "The referenced dog does not exist"
+    },
+    {
+      "code": 6003,
+      "name": "InsufficientFunds",
+      "msg": "Insufficient funds for withdrawal"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidDogName",
+      "msg": "Dog name cannot be empty"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidDogStory",
+      "msg": "Dog story cannot be empty"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidImageUrl",
+      "msg": "Image URL cannot be empty"
+    }
+  ]
+}
