@@ -7,7 +7,7 @@ const nextConfig = {
   },
   // Ensure compatibility with Vercel deployment
   swcMinify: true,
-  output: 'standalone',
+  // Remove output setting to use default Vercel behavior
 }
 
 module.exports = nextConfig
