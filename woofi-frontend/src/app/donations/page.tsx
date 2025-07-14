@@ -8,13 +8,14 @@ import { Donation, DogWithAddress } from '@/types';
 import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 
 interface DonationWithDog extends Donation {
   dog: DogWithAddress | null;
   date: Date;
 }
 
-export default function DonationsPage() {
+const DonationsPage = () => {
   const { publicKey, connected } = useWallet();
   const program = useWoofiProgram();
   const [donations, setDonations] = useState<DonationWithDog[]>([]);
@@ -103,7 +104,7 @@ export default function DonationsPage() {
       donor: new PublicKey('11111111111111111111111111111111'),
       dogId: new PublicKey('11111111111111111111111111111111'),
       amount: BigInt(500000000),
-      timestamp: BigInt(Date.now() / 1000 - 86400),
+      timestamp: BigInt(Math.floor(Date.now() / 1000) - 86400),
       message: 'Hope this helps Max get some good food!',
       dog: {
         name: 'Max',
@@ -126,7 +127,7 @@ export default function DonationsPage() {
       donor: new PublicKey('11111111111111111111111111111111'),
       dogId: new PublicKey('22222222222222222222222222222222'),
       amount: BigInt(1000000000),
-      timestamp: BigInt(Date.now() / 1000 - 172800),
+      timestamp: BigInt(Math.floor(Date.now() / 1000) - 172800),
       message: 'For Bella\'s medical treatment',
       dog: {
         name: 'Bella',
@@ -245,4 +246,7 @@ export default function DonationsPage() {
       </div>
     </Layout>
   );
-}
+};
+
+// Export a dynamic component with no SSR
+export default dynamic(() => Promise.resolve(DonationsPage), { ssr: false });

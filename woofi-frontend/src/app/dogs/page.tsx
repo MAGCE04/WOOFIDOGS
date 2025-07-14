@@ -6,8 +6,10 @@ import DogCard from '@/components/DogCard';
 import { useWoofiProgram, findPlatformPDA } from '@/utils/program';
 import { DogWithAddress, Platform } from '@/types';
 import { PublicKey } from '@solana/web3.js';
+import dynamic from 'next/dynamic';
 
-export default function DogsPage() {
+// Dynamically import the page with no SSR to prevent Solana code from running during build
+const DogsPage = () => {
   const program = useWoofiProgram();
   const [dogs, setDogs] = useState<DogWithAddress[]>([]);
   const [platform, setPlatform] = useState<Platform | null>(null);
@@ -43,6 +45,8 @@ export default function DogsPage() {
 
     if (program) {
       fetchData();
+    } else {
+      setIsLoading(false);
     }
   }, [program]);
 
@@ -198,4 +202,7 @@ export default function DogsPage() {
       </div>
     </Layout>
   );
-}
+};
+
+// Export a dynamic component with no SSR
+export default dynamic(() => Promise.resolve(DogsPage), { ssr: false });
