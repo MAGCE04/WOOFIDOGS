@@ -20,7 +20,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
-    "bs58": "^5.0.0"
+    "bs58": "^5.0.0",
+    "pino-pretty": "^10.2.0"
   },
   "devDependencies": {
     "@types/node": "^20",

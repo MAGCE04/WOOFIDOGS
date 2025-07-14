@@ -47,7 +47,12 @@ export default function AdminPage() {
         setPlatform(platformData as unknown as Platform);
         
         // Check if current user is admin
-        setIsAdmin(publicKey.equals(platformData.admin));
+        // Make sure platformData.admin exists before comparing
+        if (platformData && 'admin' in platformData) {
+          setIsAdmin(publicKey.equals(platformData.admin));
+        } else {
+          setIsAdmin(false);
+        }
         
         // Fetch all dogs
         const allDogAccounts = await program.account.dog.all();
