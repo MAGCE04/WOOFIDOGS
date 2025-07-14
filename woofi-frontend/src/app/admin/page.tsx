@@ -8,6 +8,7 @@ import { DogWithAddress, Platform } from '@/types';
 import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
+import * as anchor from '@coral-xyz/anchor';
 
 export default function AdminPage() {
   const { publicKey, connected } = useWallet();
@@ -98,11 +99,14 @@ export default function AdminPage() {
       setIsWithdrawing(true);
       const lamports = withdrawAmount * LAMPORTS_PER_SOL;
       
+      // Get platform PDA
+      const [platformPDA] = findPlatformPDA();
+      
       await program.methods
         .withdrawFunds(new anchor.BN(lamports))
         .accounts({
           admin: publicKey,
-          platform: platformPDA[0],
+          platform: platformPDA,
           treasury: platform.treasury,
           recipient: publicKey,
         })
@@ -140,6 +144,14 @@ export default function AdminPage() {
     try {
       setIsAddingDog(true);
       
+      // Get platform and dog PDAs
+      const [platformPDA] = findPlatformPDA();
+      // This is a placeholder - in a real app, you'd generate a proper dog PDA
+      const dogPDA = PublicKey.findProgramAddressSync(
+        [Buffer.from("dog"), publicKey.toBuffer(), Buffer.from(newDog.name)],
+        program.programId
+      )[0];
+      
       await program.methods
         .addDog(
           newDog.name,
@@ -154,8 +166,8 @@ export default function AdminPage() {
         )
         .accounts({
           admin: publicKey,
-          platform: platformPDA[0],
-          dog: dogPDA[0],
+          platform: platformPDA,
+          dog: dogPDA,
           systemProgram: anchor.web3.SystemProgram.programId,
         })
         .rpc();
@@ -226,11 +238,6 @@ export default function AdminPage() {
       toast.error('Failed to update dog status. Please try again.');
     }
   };
-
-  // Placeholder for anchor and PDA variables
-  const anchor = { BN: (n: number) => n, web3: { SystemProgram: { programId: new PublicKey('11111111111111111111111111111111') } } };
-  const platformPDA = [new PublicKey('11111111111111111111111111111111')];
-  const dogPDA = [new PublicKey('11111111111111111111111111111111')];
 
   return (
     <Layout>
