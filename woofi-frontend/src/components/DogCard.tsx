@@ -7,6 +7,7 @@ import { LAMPORTS_PER_SOL, PublicKey } from '@solana/web3.js';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { useWoofiProgram } from '@/utils/program';
 import toast from 'react-hot-toast';
+import * as anchor from '@coral-xyz/anchor';
 
 interface DogCardProps {
   dog: DogWithAddress;
@@ -42,6 +43,23 @@ const DogCard: FC<DogCardProps> = ({ dog, treasuryAddress, onDonationSuccess }) 
       const lamports = donationAmount * LAMPORTS_PER_SOL;
       const timestamp = Date.now();
 
+      // Generate platform PDA
+      const platformPDA = PublicKey.findProgramAddressSync(
+        [Buffer.from("platform")],
+        program.programId
+      );
+
+      // Generate donation PDA - this is a placeholder, adjust according to your program's PDA derivation
+      const donationPDA = PublicKey.findProgramAddressSync(
+        [
+          Buffer.from("donation"),
+          publicKey.toBuffer(),
+          dog.address.toBuffer(),
+          Buffer.from(timestamp.toString())
+        ],
+        program.programId
+      );
+
       await program.methods
         .donate(
           new anchor.BN(lamports),
@@ -70,11 +88,6 @@ const DogCard: FC<DogCardProps> = ({ dog, treasuryAddress, onDonationSuccess }) 
       setIsLoading(false);
     }
   };
-
-  // Placeholder for anchor and PDA variables
-  const anchor = { BN: (n: number) => n, web3: { SystemProgram: { programId: new PublicKey('11111111111111111111111111111111') } } };
-  const platformPDA = [new PublicKey('11111111111111111111111111111111')];
-  const donationPDA = [new PublicKey('11111111111111111111111111111111')];
 
   return (
     <div className="card h-full flex flex-col">
