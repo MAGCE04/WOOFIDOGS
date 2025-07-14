@@ -44,15 +44,20 @@ export default function AdminPage() {
         // Fetch platform data
         const [platformPDA] = findPlatformPDA();
         const platformData = await program.account.platform.fetch(platformPDA);
-        setPlatform(platformData as unknown as Platform);
+        
+        // Convert to our Platform type
+        const typedPlatformData = {
+          admin: new PublicKey((platformData as any).admin?.toString() || '11111111111111111111111111111111'),
+          treasury: new PublicKey((platformData as any).treasury?.toString() || '11111111111111111111111111111111'),
+          totalDonations: (platformData as any).totalDonations || BigInt(0),
+          dogCount: (platformData as any).dogCount || 0,
+          donationCount: (platformData as any).donationCount || 0
+        } as Platform;
+        
+        setPlatform(typedPlatformData);
         
         // Check if current user is admin
-        // Make sure platformData.admin exists before comparing
-        if (platformData && 'admin' in platformData) {
-          setIsAdmin(publicKey.equals(platformData.admin));
-        } else {
-          setIsAdmin(false);
-        }
+        setIsAdmin(publicKey.equals(typedPlatformData.admin));
         
         // Fetch all dogs
         const allDogAccounts = await program.account.dog.all();
